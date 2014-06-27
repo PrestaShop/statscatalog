@@ -176,7 +176,7 @@ class StatsCatalog extends Module
 		$total_nv = $total - $this->getTotalProductViewed();
 
 		$html = '
-		<script type="text/javascript" language="javascript">$(\'#calendar\').slideToggle();</script>
+		<script type="text/javascript">$(\'#calendar\').slideToggle();</script>
 			<div class="panel-heading">
 				'.$this->displayName.'
 			</div>
