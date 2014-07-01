@@ -180,7 +180,7 @@ class StatsCatalog extends Module
 			<div class="panel-heading">
 				'.$this->displayName.'
 			</div>
-			<form action="" method="post" id="categoriesForm" class="form-horizontal">
+			<form action="#" method="post" id="categoriesForm" class="form-horizontal">
 				<div class="row row-margin-bottom">
 					<label class="control-label col-lg-3">
 						'.$this->l('Choose a category').'
@@ -236,7 +236,7 @@ class StatsCatalog extends Module
 						<td>'.$product['name'].'</td>
 						<td class="left">
 							<div class="btn-group btn-group-action">
-								<a class="btn btn-default" href="index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token.'" target="_blank">
+								<a class="btn btn-default" href="'.Tools::safeOutput('index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token).'" target="_blank">
 									<i class="icon-edit"></i> '.$this->l('Edit').'
 								</a>
 								<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
@@ -244,7 +244,7 @@ class StatsCatalog extends Module
 								</button>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="'.$this->context->link->getProductLink($product['id_product'], $product['link_rewrite']).'" target="_blank">
+										<a href="'.Tools::safeOutput($this->context->link->getProductLink($product['id_product'], $product['link_rewrite'])).'" target="_blank">
 											<i class="icon-eye-open"></i> '.$this->l('View').'
 										</a>
 									</li>
@@ -262,6 +262,6 @@ class StatsCatalog extends Module
 
 	private function returnLine($label, $data)
 	{
-		return '<tr><td>'.$label.'</td><td>'.$data.'</td></tr>';
+		return $label.$data;
 	}
 }
