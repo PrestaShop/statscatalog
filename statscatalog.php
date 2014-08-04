@@ -66,48 +66,43 @@ class StatsCatalog extends Module
 
 	public function getTotalPageViewed()
 	{
-		$sql = 'SELECT SUM(pv.`counter`) AS viewed
-				FROM `'._DB_PREFIX_.'product` p
-				'.Shop::addSqlAssociation('product', 'p').'
-				LEFT JOIN `'._DB_PREFIX_.'page` pa ON p.`id_product` = pa.`id_object`
-				LEFT JOIN `'._DB_PREFIX_.'page_type` pt ON (pt.`id_page_type` = pa.`id_page_type` AND pt.`name` = \'product.php\')
-				LEFT JOIN `'._DB_PREFIX_.'page_viewed` pv ON pv.`id_page` = pa.`id_page`
-				'.$this->join.'
-				WHERE product_shop.`active` = 1
-					'.$this->where;
-		$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
-
-		return isset($result['viewed']) ? $result['viewed'] : 0;
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
+		SELECT SUM(pv.`counter`)
+		FROM `'._DB_PREFIX_.'product` p
+		'.Shop::addSqlAssociation('product', 'p').'
+		LEFT JOIN `'._DB_PREFIX_.'page` pa ON p.`id_product` = pa.`id_object`
+		LEFT JOIN `'._DB_PREFIX_.'page_type` pt ON (pt.`id_page_type` = pa.`id_page_type` AND pt.`name` IN ("product.php", "product"))
+		LEFT JOIN `'._DB_PREFIX_.'page_viewed` pv ON pv.`id_page` = pa.`id_page`
+		'.$this->join.'
+		WHERE product_shop.`active` = 1
+		'.$this->where);
 	}
 
 	public function getTotalProductViewed()
 	{
-		$sql = 'SELECT COUNT(DISTINCT pa.`id_object`)
-				FROM `'._DB_PREFIX_.'page_viewed` pv
-				LEFT JOIN `'._DB_PREFIX_.'page` pa ON pv.`id_page` = pa.`id_page`
-				LEFT JOIN `'._DB_PREFIX_.'page_type` pt ON pt.`id_page_type` = pa.`id_page_type`
-				LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = pa.`id_object`
-				'.Shop::addSqlAssociation('product', 'p').'
-				'.$this->join.'
-				WHERE pt.`name` = \'product.php\'
-					AND product_shop.`active` = 1
-					'.$this->where;
-
-		return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql);
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
+		SELECT COUNT(DISTINCT pa.`id_object`)
+		FROM `'._DB_PREFIX_.'page_viewed` pv
+		LEFT JOIN `'._DB_PREFIX_.'page` pa ON pv.`id_page` = pa.`id_page`
+		LEFT JOIN `'._DB_PREFIX_.'page_type` pt ON pt.`id_page_type` = pa.`id_page_type`
+		LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = pa.`id_object`
+		'.Shop::addSqlAssociation('product', 'p').'
+		'.$this->join.'
+		WHERE pt.`name` IN ("product.php", "product")
+		AND product_shop.`active` = 1
+		'.$this->where);
 	}
 
 	public function getTotalBought()
 	{
-		$sql = 'SELECT SUM(od.`product_quantity`) AS bought
-				FROM `'._DB_PREFIX_.'orders` o
-				LEFT JOIN `'._DB_PREFIX_.'order_detail` od ON o.`id_order` = od.`id_order`
-				LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = od.`product_id`
-				'.$this->join.'
-				WHERE o.valid = 1
-					'.$this->where;
-		$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
-
-		return isset($result['bought']) ? $result['bought'] : 0;
+		return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
+		SELECT SUM(od.`product_quantity`)
+		FROM `'._DB_PREFIX_.'orders` o
+		LEFT JOIN `'._DB_PREFIX_.'order_detail` od ON o.`id_order` = od.`id_order`
+		LEFT JOIN `'._DB_PREFIX_.'product` p ON p.`id_product` = od.`product_id`
+		'.$this->join.'
+		WHERE o.valid = 1
+		'.$this->where);
 	}
 
 	public function getProductsNB($id_lang)
