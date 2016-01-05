@@ -225,13 +225,14 @@ class StatsCatalog extends Module
 					</thead>
 					<tbody>';
 			foreach ($products_nb as $product)
+				$urlParams = array('id_product' => $product['id_product'], 'updateproduct' => '1');
 				$html .= '
 					<tr'.($irow++ % 2 ? ' class="alt_row"' : '').'>
 						<td>'.$product['id_product'].'</td>
 						<td>'.$product['name'].'</td>
 						<td class="left">
 							<div class="btn-group btn-group-action">
-								<a class="btn btn-default" href="'.Tools::safeOutput('index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token).'" target="_blank">
+								<a class="btn btn-default" href="'.Tools::safeOutput(preg_replace("/\\?.*$/", '?id_product='.$product['id_product'].'&addproduct&token='.$product_token, $this->context->link->getAdminLink('AdminProducts', true, $urlParams))).'" target="_blank">
 									<i class="icon-edit"></i> '.$this->l('Edit').'
 								</a>
 								<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
