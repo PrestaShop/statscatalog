@@ -39,11 +39,16 @@ class StatsCatalog extends Module
 		$this->version = '1.3.0';
 		$this->author = 'PrestaShop';
 		$this->need_instance = 0;
+		$this->isLegacy = true;
 
 		parent::__construct();
 
 		$this->displayName = $this->l('Catalog statistics');
 		$this->description = $this->l('Adds a tab containing general statistics about your catalog to the Stats dashboard.');
+
+		if(version_compare(_PS_VERSION_, '1.7.0.0') >= 0) {
+			$this->isLegacy = false;
+		}
 	}
 
 	public function install()
@@ -224,14 +229,18 @@ class StatsCatalog extends Module
 						</tr>
 					</thead>
 					<tbody>';
-			foreach ($products_nb as $product)
+			foreach ($products_nb as $product) {
+				$editLink = $this->isLegacy
+					? 'index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token
+					: $this->context->link->getAdminLink('AdminProducts', false, ['id_product' => $product['id_product']])
+				;
 				$html .= '
 					<tr'.($irow++ % 2 ? ' class="alt_row"' : '').'>
 						<td>'.$product['id_product'].'</td>
 						<td>'.$product['name'].'</td>
 						<td class="left">
 							<div class="btn-group btn-group-action">
-								<a class="btn btn-default" href="'.Tools::safeOutput('index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token).'" target="_blank">
+								<a class="btn btn-default" href="'.Tools::safeOutput($editLink).'" target="_blank">
 									<i class="icon-edit"></i> '.$this->l('Edit').'
 								</a>
 								<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
@@ -247,9 +256,9 @@ class StatsCatalog extends Module
 							</div>
 						</td>
 					</tr>';
-			$html .= '
-					</tbody>
-				</table>';
+			}
+
+			$html .= '</tbody></table>';
 		}
 
 		return $html;
