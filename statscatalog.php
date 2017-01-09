@@ -37,14 +37,15 @@ class statscatalog extends Module
     {
         $this->name = 'statscatalog';
         $this->tab = 'analytics_stats';
-        $this->version = '1.3.0';
+        $this->version = '2.0.0';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
 
         parent::__construct();
 
-        $this->displayName = $this->l('Catalog statistics');
-        $this->description = $this->l('Adds a tab containing general statistics about your catalog to the Stats dashboard.');
+        $this->displayName = $this->trans('Catalog statistics', array(), 'Modules.Statscatalog.Admin');
+        $this->description = $this->trans('Adds a tab containing general statistics about your catalog to the Stats dashboard.', array(), 'Modules.Statscatalog.Admin');
+        $this->ps_versions_compliancy = array('min' => '1.7.0.0', 'max' => _PS_VERSION_);
     }
 
     public function install()
@@ -167,7 +168,7 @@ class statscatalog extends Module
         $average_viewed = $total ? ($total_page_viewed / $total) : 0;
         $conversion = number_format((float)($total_page_viewed ? ($total_bought / $total_page_viewed) : 0), 2, '.', '');
         if ($conversion_reverse = number_format((float)($total_bought ? ($total_page_viewed / $total_bought) : 0), 2, '.', '')) {
-            $conversion .= sprintf($this->l('(1 purchase / %d visits)'), $conversion_reverse);
+            $conversion .= $this->trans('(1 purchase / %d visits)', array($conversion_reverse), 'Modules.Statscatalog.Admin');
         }
 
         $total_nv = $total - $this->getTotalProductViewed();
@@ -180,11 +181,11 @@ class statscatalog extends Module
 			<form action="#" method="post" id="categoriesForm" class="form-horizontal">
 				<div class="row row-margin-bottom">
 					<label class="control-label col-lg-3">
-						'.$this->l('Choose a category').'
+						'.$this->trans('Choose a category', array(), 'Modules.Statscatalog.Admin').'
 					</label>
 					<div class="col-lg-6">
 						<select name="id_category" onchange="$(\'#categoriesForm\').submit();">
-							<option value="0">'.$this->l('All').'</option>';
+							<option value="0">'.$this->trans('All', array(), 'Global.Actions').'</option>';
         foreach ($categories as $category) {
             $html .= '<option value="'.$category['id_category'].'"'.($id_category == $category['id_category'] ? ' selected="selected"' : '').'>'.
                 $category['name'].'
@@ -196,33 +197,33 @@ class statscatalog extends Module
 				</div>
 			</form>
 			<ul class="list-group">
-				<li class="list-group-item">'.$this->returnLine($this->l('Products available:'), '<span class="badge">'.(int)$total).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Average price (base price):'), '<span class="badge">'.Tools::displayPrice($average_price, $this->context->currency)).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Product pages viewed:'), '<span class="badge">'.(int)$total_page_viewed).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Products bought:'), '<span class="badge">'.(int)$total_bought).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Average number of page visits:'), '<span class="badge">'.number_format((float)$average_viewed, 2, '.', '')).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Average number of purchases:'), '<span class="badge">'.number_format((float)$average_purchase, 2, '.', '')).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Images available:'), '<span class="badge">'.(int)$total_pictures).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Average number of images:'), '<span class="badge">'.number_format((float)$average_pictures, 2, '.', '')).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Products never viewed:'), '<span class="badge">'.(int)$total_nv.' / '.(int)$total).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Products never purchased:'), '<span class="badge">'.(int)$total_nb.' / '.(int)$total).'</span></li>
-				<li class="list-group-item">'.$this->returnLine($this->l('Conversion rate*:'), '<span class="badge">'.$conversion).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Products available:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.(int)$total).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Average price (base price):', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.Tools::displayPrice($average_price, $this->context->currency)).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Product pages viewed:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.(int)$total_page_viewed).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Products bought:', array(), 'Admin.Global'), '<span class="badge">'.(int)$total_bought).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Average number of page visits:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.number_format((float)$average_viewed, 2, '.', '')).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Average number of purchases:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.number_format((float)$average_purchase, 2, '.', '')).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Images available:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.(int)$total_pictures).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Average number of images:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.number_format((float)$average_pictures, 2, '.', '')).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Products never viewed:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.(int)$total_nv.' / '.(int)$total).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Products never purchased:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.(int)$total_nb.' / '.(int)$total).'</span></li>
+				<li class="list-group-item">'.$this->returnLine($this->trans('Conversion rate*:', array(), 'Modules.Statscatalog.Admin'), '<span class="badge">'.$conversion).'</span></li>
 			</ul>
 			<div class="row row-margin-bottom">
 				<p>
-					<i class="icon-asterisk"></i>'.$this->l('Defines the average conversion rate for the product page. It is possible to purchase a product without viewing the product page, so this rate can be greater than 1.').'
+					<i class="icon-asterisk"></i>'.$this->trans('Defines the average conversion rate for the product page. It is possible to purchase a product without viewing the product page, so this rate can be greater than 1.', array(), 'Modules.Statscatalog.Admin').'
 				</p>
 			</div>';
 
         if (count($products_nb) && count($products_nb) < 50) {
             $html .= '
-				<div class="panel-heading">'.$this->l('Products never purchased').'</div>
+				<div class="panel-heading">'.$this->trans('Products never purchased', array(), 'Modules.Statscatalog.Admin').'</div>
 				<table class="table">
 					<thead>
 						<tr>
-							<th><span class="title_box active">'.$this->l('ID').'</span></th>
-							<th><span class="title_box active">'.$this->l('Name').'</span></th>
-							<th><span class="title_box active">'.$this->l('Edit / View').'</span></th>
+							<th><span class="title_box active">'.$this->trans('ID', array(), 'Admin.Global').'</span></th>
+							<th><span class="title_box active">'.$this->trans('Name', array(), 'Admin.Global').'</span></th>
+							<th><span class="title_box active">'.$this->trans('Edit / View', array(), 'Modules.Statscatalog.Admin').'</span></th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -234,7 +235,7 @@ class statscatalog extends Module
 						<td class="left">
 							<div class="btn-group btn-group-action">
 								<a class="btn btn-default" href="'.Tools::safeOutput('index.php?tab=AdminProducts&id_product='.$product['id_product'].'&addproduct&token='.$product_token).'" target="_blank">
-									<i class="icon-edit"></i> '.$this->l('Edit').'
+									<i class="icon-edit"></i> '.$this->trans('Edit', array(), 'Admin.Global').'
 								</a>
 								<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
 									<span class="caret">&nbsp;</span>
@@ -242,7 +243,7 @@ class statscatalog extends Module
 								<ul class="dropdown-menu">
 									<li>
 										<a href="'.Tools::safeOutput($this->context->link->getProductLink($product['id_product'], $product['link_rewrite'])).'" target="_blank">
-											<i class="icon-eye-open"></i> '.$this->l('View').'
+											<i class="icon-eye-open"></i> '.$this->trans('View', array(), 'Admin.Global').'
 										</a>
 									</li>
 								</ul>
