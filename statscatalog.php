@@ -44,6 +44,7 @@ class StatsCatalog extends Module
 
 		$this->displayName = $this->l('Catalog statistics');
 		$this->description = $this->l('Adds a tab containing general statistics about your catalog to the Stats dashboard.');
+		$this->ps_versions_compliancy = array('min' => '1.6', 'max' => '1.7.0.99');
 	}
 
 	public function install()
