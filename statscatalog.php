@@ -185,7 +185,7 @@ class statscatalog extends Module
 					</label>
 					<div class="col-lg-6">
 						<select name="id_category" onchange="$(\'#categoriesForm\').submit();">
-							<option value="0">'.$this->trans('All', array(), 'Global.Actions').'</option>';
+							<option value="0">'.$this->trans('All', array(), 'Admin.Actions').'</option>';
         foreach ($categories as $category) {
             $html .= '<option value="'.$category['id_category'].'"'.($id_category == $category['id_category'] ? ' selected="selected"' : '').'>'.
                 $category['name'].'
