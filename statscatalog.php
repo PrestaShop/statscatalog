@@ -44,7 +44,7 @@ class statscatalog extends Module
         parent::__construct();
 
         $this->displayName = $this->trans('Catalog statistics', array(), 'Modules.Statscatalog.Admin');
-        $this->description = $this->trans('Adds a tab containing general statistics about your catalog to the Stats dashboard.', array(), 'Modules.Statscatalog.Admin');
+        $this->description = $this->trans('Enrich your stats, have a look at your catalog’s general statistics.', array(), 'Modules.Statscatalog.Admin');
         $this->ps_versions_compliancy = array('min' => '1.7.1.0', 'max' => _PS_VERSION_);
     }
 
