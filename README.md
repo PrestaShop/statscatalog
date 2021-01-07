@@ -2,7 +2,7 @@
 
 ## About
 
-Adds a tab containing general statistics about your catalog to the Stats dashboard.
+Enrich your stats, have a look at your catalog’s general statistics.
 
 ## Reporting issues
 
