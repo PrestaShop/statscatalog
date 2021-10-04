@@ -29,7 +29,13 @@ if (!defined('_PS_VERSION_')) {
 
 class statscatalog extends Module
 {
+    /**
+     * @var string
+     */
     private $join = '';
+    /**
+     * @var string
+     */
     private $where = '';
 
     public function __construct()
