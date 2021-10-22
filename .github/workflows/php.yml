@@ -1,3 +1,4 @@
+---
 name: PHP tests
 on: [push, pull_request]
 jobs:
@@ -35,7 +36,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                presta-versions: ['1.7.1.0', 'latest']
+                presta-versions: ['1.7.6', 'latest']
         steps:
             - name: Checkout
               uses: actions/checkout@v2.0.0
@@ -62,5 +63,5 @@ jobs:
 
             # Run a container for PHPStan, having access to the module content and PrestaShop sources.
             # This tool is outside the composer.json because of the compatibility with PHP 5.6
-            - name : Run PHPStan
+            - name: Run PHPStan
               run: docker run --rm --volumes-from temp-ps -v $PWD:/web/module -e _PS_ROOT_DIR_=/var/www/html --workdir=/web/module phpstan/phpstan:0.12 analyse --configuration=/web/module/tests/phpstan/phpstan.neon
