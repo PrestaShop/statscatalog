@@ -50,7 +50,7 @@ class statscatalog extends Module
 
         $this->displayName = $this->trans('Catalog statistics', [], 'Modules.Statscatalog.Admin');
         $this->description = $this->trans('Enrich your stats, have a look at your catalog’s general statistics.', [], 'Modules.Statscatalog.Admin');
-        $this->ps_versions_compliancy = ['min' => '1.7.1.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.6.0', 'max' => _PS_VERSION_];
     }
 
     public function install()
@@ -203,7 +203,7 @@ class statscatalog extends Module
 			</form>
 			<ul class="list-group">
 				<li class="list-group-item">' . $this->returnLine($this->trans('Products available:', [], 'Modules.Statscatalog.Admin'), '<span class="badge">' . (int) $total) . '</span></li>
-				<li class="list-group-item">' . $this->returnLine($this->trans('Average price (base price):', [], 'Modules.Statscatalog.Admin'), '<span class="badge">' . Tools::displayPrice($average_price, $this->context->currency)) . '</span></li>
+				<li class="list-group-item">' . $this->returnLine($this->trans('Average price (base price):', [], 'Modules.Statscatalog.Admin'), '<span class="badge">' . $this->context->getCurrentLocale()->formatPrice($average_price, $this->context->currency->iso_code)) . '</span></li>
 				<li class="list-group-item">' . $this->returnLine($this->trans('Product pages viewed:', [], 'Modules.Statscatalog.Admin'), '<span class="badge">' . (int) $total_page_viewed) . '</span></li>
 				<li class="list-group-item">' . $this->returnLine($this->trans('Products bought:', [], 'Admin.Global'), '<span class="badge">' . (int) $total_bought) . '</span></li>
 				<li class="list-group-item">' . $this->returnLine($this->trans('Average number of page visits:', [], 'Modules.Statscatalog.Admin'), '<span class="badge">' . number_format((float) $average_viewed, 2, '.', '')) . '</span></li>
