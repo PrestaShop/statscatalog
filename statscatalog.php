@@ -41,7 +41,7 @@ class statscatalog extends Module
     public function __construct()
     {
         $this->name = 'statscatalog';
-        $this->tab = 'analytics_stats';
+        $this->tab = 'administration';
         $this->version = '2.0.2';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
