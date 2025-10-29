@@ -238,7 +238,7 @@ class statscatalog extends Module
 						<td>' . $product['name'] . '</td>
 						<td class="left">
 							<div class="btn-group btn-group-action">
-								<a class="btn btn-default" href="' . Tools::safeOutput($this->context->link->getAdminLink('AdminProducts', true) . '&id_product=' . $product['id_product'] . '&addproduct') . '" target="_blank">
+								<a class="btn btn-default" href="' . Tools::safeOutput($this->context->link->getAdminLink('AdminProducts', true, [], ['updateproduct' => 1, 'id_product' => $product['id_product']])) . '" target="_blank">
 									<i class="icon-edit"></i> ' . $this->trans('Edit', [], 'Admin.Global') . '
 								</a>
 								<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
