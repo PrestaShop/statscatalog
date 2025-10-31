@@ -42,7 +42,7 @@ class statscatalog extends Module
     {
         $this->name = 'statscatalog';
         $this->tab = 'administration';
-        $this->version = '2.0.4';
+        $this->version = '2.0.5';
         $this->author = 'PrestaShop';
         $this->need_instance = 0;
 
