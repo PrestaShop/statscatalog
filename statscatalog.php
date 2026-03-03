@@ -157,7 +157,7 @@ class statscatalog extends Module
 
         $result1 = $this->getQuery1();
         $total = $result1['total'];
-        $average_price = $result1['average_price'];
+        $average_price = (float) $result1['average_price'];
         $total_pictures = $result1['images'];
         $average_pictures = $total ? $total_pictures / $total : 0;
 
